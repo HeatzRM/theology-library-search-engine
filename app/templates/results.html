@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container" style="background-color: white; border-radius: 25px; padding: 20px; margin-top: 2%; margin-bottom: 2%;">
+          <div class="row">
+            <div class="card-content"> 
+                
+                <span class="card-title black-text" style="text-align:center;" ><h3>Search Results</h3></span><br>
+                          
+                        {% include "partials/search.html" %}
+                          
+                        {% for term in cluster_terms%}
+                        <a class="btn-flat">{{ term }}</a>
+                        {% endfor %}
+                              
+                              <div class="row">
+                              {% for article in articles %} 
+
+                                  <div class="card-panel grey lighten-5 z-depth-1">
+                                    <div class="row valign-wrapper">
+                                      <div class="col s2">
+                                        <img  src="{{ url_for('static', filename='images/{}/coverimage/{}/'.format(article.img_url, article.cover[0].cover_name)) }}" alt="" class="responsive-img"> <!-- notice the "circle" class -->
+                                      </div>
+                                      <div class="col s10">
+                                        <span class="black-text">
+                                            <h4 class="center-align"><a href="{{ url_for('article',articleid=article.id) }}"> {{ article.title }} </a></h4>
+                                            <h5 class="center-align">{{article.journal_title}}</h5>
+                                            <h5 class="center-align">Author: {{ article.author }} </h5>
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                     
+                            {% endfor %}
+                          </div>
+      <h6>Related Links</h6>
+      <div id="content"></div>
+    <script>
+      function hndlr(response) {
+      for (var i = 0; i < response.items.length; i++) {
+        var item = response.items[i];
+        document.getElementById("content").innerHTML += "<br><a href=" + item.link+ ">" +item.htmlTitle + "</a>";
+      }
+    }
+    </script>
+    <script 
+    src="https://www.googleapis.com/customsearch/v1?key=AIzaSyB44WZ88XxGAVcupsKagf5PcXsSxi9OpG8
+&cx=017576662512468239146:omuauf_lfve&q={{query}}&callback=hndlr"
+    >
+    </script>
+
+              </div>
+        </div>
+    </div>
+
+{% endblock %}

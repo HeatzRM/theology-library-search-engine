@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="container" style="background-color: white; padding: 20px; margin-top: 2%; margin-bottom: 2%;">
+
+            	
+    <span class="card-title black-text center-align" >
+    	<h3>College of Theology Library Articles</h3>
+    </span>
+
+
+			<div class="row">
+			{% for article in articles.items %}	
+
+	    <div class="col s12 m3">
+	      <div class="card large">
+	        <div class="card-image">
+	          <img
+		  			src="{{ url_for('static', filename='images/{}/coverimage/{}/'.format(article.img_url, article.cover[0].cover_name)) }}"
+            alt="book_cover" 
+             >
+	        </div>
+	        <div class="card-content">
+			          {{ article.cover_img }}
+
+								{% if article.author %} <p>Author: {{ article.author }}  </p> {% endif %}
+	        </div>
+
+
+	        <div class="card-action">
+	          <a href="{{ url_for('article',articleid=article.id) }}"> {{ article.title }} </a>
+	        </div>
+	      </div>
+	    </div>
+			{% endfor %}
+		</div>
+	          
+
+
+        	          <ul class="pagination" style=" display: flex; align-items: center; justify-content: center;">
+
+			  				{% if articles.has_prev %}
+			  				<li class="waves-effect"><a href="{{ url_for('all_articles', page_num=articles.prev_num)}} "><i class="material-icons">chevron_left</i></a></li>
+			  				{% else %}
+			  				<li class="disabled"><a><i class="material-icons">chevron_left</i></a></li>
+			  				{% endif %}
+
+							  {% for page in articles.iter_pages(left_edge=5, right_edge=5, left_current=5) %}
+							  		{% if page %}
+							  		<li class="active black"><a href="{{ url_for('all_articles', page_num=page) }}">{{ page }}</a></li>
+							  			
+							  		{% else %}
+							  		...
+							  		{% endif %}
+			
+						  	{% endfor %}
+
+						  	{% if articles.has_next %}
+							  <li class="waves-effect"><a href="{{ url_for('all_articles', page_num=articles.next_num)}} "><i class="material-icons">chevron_right</i></a><i class="material-icons">chevron_right</i></a></li>
+							  {% else %}
+							  <li class="disabled"><a><i class="material-icons">chevron_right</i></a></li>
+							  {% endif %}
+
+  					</ul>
+
+    </div>
+
+{% endblock %}

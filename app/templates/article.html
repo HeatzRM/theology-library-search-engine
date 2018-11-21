@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container" style="background-color: white; border-radius: 25px; padding: 20px;  margin-top: 2%; margin-bottom: 2%;">
+        <div class="row">
+            <div class="card-content" style="margin-left: 5%; margin-right: 5%;"> 
+                
+                <span class="card-title black-text" style="text-align:center;" ><h3></h3></span>
+
+                    <table>
+                        <tr valign="top">
+
+                            <td>
+                                <p> 
+                                        {{ cover_img_file }}
+                                          <img 
+                                            class="materialboxed" 
+                                            width="250" 
+                                            src="{{ url_for('static', filename='images/{}/coverimage/{}/'.format(article.img_url, 
+                                            article.cover[0].cover_name)) }}" >
+                                </p> 
+                                {% if current_user.is_authenticated %}
+                                <form method="POST">
+                                    <a class="waves-effect waves-light btn-large red darken-2" href="{{ url_for('delete', article_num = article.id ) }}" type='submit'>Delete This Article</a>
+                                </form>
+
+                           
+                                {% endif %}
+
+                                <h4>Title: {{ article.title }}</h4>
+
+                                {% if article.subtitle %}
+                                <h5>Subtitle: {{ article.subtitle }}</h5>
+                                {% endif %}
+
+                                {% if article.author %}
+                                <p>Author: {{ article.author }}</p>
+                                <br>
+                                {% endif %}
+
+                                {% if article.abstract %}
+                                <p>Abstract: {{ article.abstract }}</p>
+                                <br>
+                                {% endif %}
+
+                                {% if article.journal_title %}
+                                <p>Journal Title: {{ article.journal_title }}</p>
+                                <br>
+                                {% endif %}
+
+                                {% if article.place_of_publisher %}
+                                <p>Place Of Publisher: {{ article.place_of_publisher }}</p>
+                                <br>
+                                {% endif %}
+
+                                {% if article.name_of_publisher %}
+                                <p>Name Of Publisher: {{ article.name_of_publisher }}</p>
+                                <br>
+                                {% endif %}
+
+                                {% if article.issn %}
+                                <p>ISSN: {{ article.issn }}</p>
+                                <br>
+                                {% endif %}
+
+                                {% if article.volume %}
+                                <p>Volume: {{ article.volume }}</p>
+                                <br>
+                                {% endif %}
+
+                                {% if article.number %}
+                                <p>Number: {{ article.number }}</p>
+                                <br>
+                                {% endif %}
+
+                                {% if article.month %}
+                                <p>Month of Publication: {{ article.month }}</p>
+                                <br>
+                                {% endif %}
+
+                                {% if article.year %}
+                                <p>Year of Publication: {{ article.year }}</p>
+                                <br>
+                                {% endif %}
+                                
+                                {% if article.subject %}
+                                <p>Subject: {{ article.subject }}</p>
+                                <br>
+                                {% endif %}
+           
+                                {% if article.no_of_pages %}
+                                <p>Number of Pages: {{ article.no_of_pages }}</p>
+                                <br>
+                                {% endif %}
+
+                
+
+                            </td>
+                        </tr>
+                    </table>
+                    
+
+            </div>
+        </div>
+    </div>
+
+ 
+{% endblock %}

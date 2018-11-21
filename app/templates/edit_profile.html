@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container" style="background-color: white; border-radius: 25px; padding: 20px;  margin-top: 2%; margin-bottom: 2%;">
+        <div class="row">
+            <div class="card-content"> 
+                <br>
+                <span class="card-title black-text" style="margin-left: 5%; margin-right: 5%; text-align:center;" ><h3>Edit Profile</h3></span>
+
+                 <form action="" method="post">
+                        {{ form.hidden_tag() }}
+
+                        <p>
+                            {{ form.username.label }}<br>
+                            {{ form.username(size=32) }}<br>
+                            {% for error in form.username.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+
+                        <p>
+                            {{ form.email.label }}<br>
+                            {{ form.email(cols=50, rows=4) }}<br>
+                            {% for error in form.email.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+
+                        <p>
+                            {{ form.password.label }}<br>
+                            {{ form.password(cols=50, rows=4) }}<br>
+                            {% for error in form.password.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+
+                        <p>
+                            {{ form.password2.label }}<br>
+                            {{ form.password2(cols=50, rows=4) }}<br>
+                            {% for error in form.password2.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+
+                        
+                        <p>{{ form.submit(class_="btn-large") }}</p>
+
+                     </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

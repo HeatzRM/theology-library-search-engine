@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+    
+      <div class="container" style="background-color: white;  padding: 20px;">
+          <div class="row">
+            <div class="card-content"  style="padding-left:10%; padding-right:10%; "> 
+                <br>
+                <span class="card-title black-text center">
+                    <h3>Welcome!</h3>
+                    <h3>Sign In</h3>
+                </span>
+                
+                    <form action="" method="post">
+                        {{ form.hidden_tag() }}
+                        <p>
+                            {{ form.username.label }}<br>
+                            {{ form.username(size=32) }}<br>
+                            {% for error in form.username.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {{ form.password.label }}<br>
+                            {{ form.password(size=32) }}<br>
+                            {% for error in form.password.errors %}
+                             <span style="color: red;">[{{ error}}]</span>
+                            {% endfor %}
+                        </p>
+                        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+                        <p class="right">{{ form.submit(class_="btn-large") }}</p>
+                    </form>
+                    <br>
+                    <br>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

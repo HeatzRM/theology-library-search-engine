@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+      <div class="container" style="background-color: white; border-radius: 25px; padding: 20px; margin-top: 2%; margin-bottom: 2%;">
+          <div class="row">
+            <div class="card-content">
+                
+                <span class="card-title black-text" style="text-align:center;" >
+                      <h3>Search for Journals</h3>
+                </span>
+                    <form action="" method="post">
+                    <div class="input-field">
+                            {{ form.hidden_tag() }}
+                            {{ form.query(style="font-size: 40px; height: 70px;") }}
+                            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                    </div>
+                    
+                        <p class="">{{ form.submit(class_="btn-large") }}</p>
+                        <p class="left">
+                        <a class='btn-large' href="{{ url_for('advanced_search_engine') }}" type="button">Advanced Search</a>
+                        </p>
+                    </form>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

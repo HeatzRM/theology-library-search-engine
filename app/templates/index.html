@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="background-color: white; border-radius: 25px; padding: 20px; margin-top: 2%; margin-bottom: 2%;">
+    <div class="card-content"> 
+
+        <span class="card-title black-text" style="text-align:center;" >
+        	<h3>Newly Acquired Articles</h3>
+        </span>
+			    
+
+		<div class="row">
+				{% for article in articles %}	
+
+				<div class="col s12 m3">
+					<div class="card large">
+
+						<div class="card-image">
+							<img
+							src="{{ url_for('static', filename='images/{}/coverimage/{}/'.format(article.img_url, article.cover[0].cover_name)) }}"
+							alt="book_cover" 
+							>
+						</div>
+
+						<div class="card-content">
+							{{ article.cover_img }}
+
+							{% if article.author %} <p>Author: {{ article.author }}  </p> {% endif %}
+						</div>
+
+
+						<div class="card-action">
+							<a href="{{ url_for('article',articleid=article.id) }}"> {{ article.title }} </a>
+						</div>
+
+					</div>
+				</div>
+				{% endfor %}
+		</div>
+		</div>
+
+
+				
+{% endblock %} 

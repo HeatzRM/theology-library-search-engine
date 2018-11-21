@@ -1,0 +1,314 @@
+<html lang = "en">
+
+    <head>
+
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+      <!-- Import JQuery-->
+      <script type=text/javascript src="{{url_for('static', filename='js/jquery.min.js') }}"></script>
+
+      <!-- Import local materialize.min.css -->
+      <link href="{{url_for('static',filename='css/materialize.min.css')}}" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+      <!-- Import online materialize.min.js -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+      <!-- Import local materialize.js -->
+      <script type=text/javascript src="{{url_for('static', filename='js/materialize.js') }}"></script>
+
+      <!-- Import own style.css -->
+      <link href="{{url_for('static',filename='css/styles.css')}}" type="text/css" rel="stylesheet" media="screen,projection"/> 
+
+      <!-- Import online fonts-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link href="//db.onlinewebfonts.com/c/b4c7ab5041cd9acde66332fa9eb13dad?family=P22KirkwallW01-Regular" rel="stylesheet" type="text/css"/>
+
+
+      <!-- Import Icon -->
+      <link rel="icon" type="image/png"  href=" {{url_for('static', filename='cot-logo.png') }}" />
+
+      {% if title %}
+      <title>{{ title }} - Library</title>
+      {% else %}
+      <title>Journal System</title>
+      {% endif %}
+
+
+      <script type="text/javascript">
+        $(document).ready(function(){
+           $(".button-collapse").sideNav();
+           $('.collapsible').collapsible();
+        });
+      </script>
+
+
+
+<!-- NAVBAR for mobile -->
+<a href="#" data-activates="slide-out" class="button-collapse"></a>
+<ul id="slide-out" class="side-nav ">
+  <div class="background">
+    <div class="nav-wrapper container">
+
+        <li>
+          <a href=" {{ url_for('all_articles', page_num=1) }}">All Articles</a>
+        </li>
+
+        <li>
+          <a href="{{url_for('simple_search_engine')}}">Search</a>
+        </li>
+
+        <li>
+          <a href=" {{ url_for('index') }}">Home</a>
+        </li>
+
+        {% if current_user.is_anonymous %}
+
+          <li>
+            <a href="{{ url_for('login') }}">Login</a>
+          </li>
+
+        {% else %}
+          <li>
+            <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
+          </li>
+
+          <li>
+            <a href="{{ url_for('add_article') }}">Add Article</a>
+          </li>
+
+            <li>
+            <a href=" {{ url_for('register') }}">Add User</a>
+          </li>
+
+
+          <li>
+            <a href=" {{ url_for('logout') }}">Logout</a>
+          </li>
+
+
+      
+        {% endif %}
+
+    </div>    
+  </div>
+</ul>
+
+<!-- End Navbar for mobile -->
+
+</head>
+  <body>
+  <main>
+
+  <!-- Navbar -->
+    <nav class="navbar-fixed white" role="navigation" style=" position: fixed;">
+      <div class="nav-wrapper black-text">
+
+
+        <div>
+            <a id="logo-container" href=" {{ url_for('index')}} " class="brand-logo left red-text demo">
+              <img  style="    
+              height: auto;
+              width: auto;
+              max-height: 72px;
+              max-width: 250px; 
+              padding-top: 10px; " 
+              lass="img-responsive" 
+              src="{{url_for('static', filename='banner.png') }}">        
+            </a>
+        </div>
+          
+              {% if current_user.is_anonymous %}
+
+                <ul class="right hide-on-med-and-down">
+                  <li> 
+                    <a class="modal-trigger black-text" href="{{ url_for('login') }}">
+                      <i class="material-icons right">face</i>
+                      Login
+                    </a>
+                  </li> 
+                 
+                </ul>                 
+
+
+              {% else %}
+
+
+                <!-- Dropdown Structure -->
+              <ul id="dropdown1" class="dropdown-content">
+                <li>
+                  <a class="black-text" href="{{ url_for('add_article') }}">
+                    <i class="material-icons right">add</i>Add Article
+                  </a>
+                </li>
+
+                <li class="divider"></li>
+
+                <li>
+                  <a class="black-text" href="{{ url_for('register') }}">
+                    <i class="material-icons right">person_add</i>Add User
+                  </a>
+                </li>
+                
+
+                <li class="divider"></li>
+
+                <li>
+                  <a class="black-text" href="{{ url_for('user', username=current_user.username) }}">  <i class="material-icons right">account_box</i>Profile
+                  </a>
+                </li>
+
+                <li>
+                  <a class="black-text" href=" {{ url_for('logout') }}">
+                    <i class="material-icons right">exit_to_app</i>Logout
+                  </a>
+                </li>
+
+                <li class="divider"></li>
+              </ul>
+
+              <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+              <ul class="right hide-on-med-and-down">
+                <li>
+                  <a class="dropdown-button black-text" href="#!" data-activates="dropdown1">  <i class="material-icons right">menu</i>Admin Menu
+                  </a>
+                </li>
+              </ul>
+
+
+   
+              {% endif %} 
+
+              <ul class="right hide-on-med-and-down">
+                <li>
+                  <a class="black-text" href=" {{ url_for('all_articles', page_num=1) }}">All Articles
+                    <i class="material-icons right">book</i>
+                  </a>
+                </li>
+              </ul>
+
+              <ul class="right hide-on-med-and-down">
+                  <li>
+                    <a class="black-text" href=" {{ url_for('advanced_search_engine') }}">Advanced Search
+                    </a>
+                  </li>
+                </ul>
+
+              <ul class="right hide-on-med-and-down">
+                <li>              
+                  <div class="nav-wrapper">
+                    
+                    <form method="POST" action="/search">
+                      <div class="input-field">
+
+
+                        <input class="" name="search" id="search" type="search" required placeholder="Search for Articles">
+
+                        <label class="label-icon" for="search"><i class="material-icons black-text">search</i></label>
+
+                      </div>
+                    </form>
+
+                  </div>
+              </li>
+              
+              </ul>
+
+              <ul class="right hide-on-med-and-down">
+                <li>
+                   <a class="black-text"href=" {{ url_for('index') }}">
+                      <i class="material-icons right">home</i>
+                      Home
+                  </a>
+                </li>
+              </ul>
+
+
+
+        </div>
+    </nav> 
+    <!-- End Navbar -->
+
+          
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li> 
+
+                <script>
+                $(function() {
+                  Materialize.toast("{{ message }}", 30000);
+                });
+              </script>
+           </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+
+  </main>
+
+
+        <footer class="page-footer black">
+        <div class="container">
+          <div class="row">
+            <div class="col l6 s12 white-text">
+              <h5 class="red-text text-lighten-2">Central Philippine University</h5>
+              <h5 class="red-text text-lighten-2">College of Theology</h5>
+              <ul>
+                <li>
+                  <a class="white-text text-lighten-2">
+                    The Central Philippine University College of Theology (also referred to as the College of Theology, Theology or COT) is one of the constituent academic units of Central Philippine University, a private university in Iloilo City, Philippines. 
+                  </a>
+                <li>
+                  <br>
+
+              <li>
+                <a class="white-text text-lighten-2">
+                   Founded in 1905 as the Baptist Missionary Training School to train men Christian workers and missionaries through a grant given by the American industrialist and Northern Baptist John D. Rockefeller on June 1905, it is the oldest college and academic unit of Central Philippine University.
+                </a>
+              </li>
+                <br>
+
+              <li>
+                 <a class="white-text text-lighten-2">
+                The college is affiliated with the Convention of Philippine Baptist Churches and is accredited with the Association of Theological Education in South East Asia (ATESEA)
+                </a>
+              </li>
+
+            </ul>
+          </div>
+
+            <div class="col l3 s12">
+              <h5 class="white-text">Links</h5>
+              <ul>
+                <li>
+                  <a class="white-text" href="http://www.cpu.edu.ph/cpucmsv2/">Central Philippine University
+                  </a>
+                </li>
+                <br>
+                <li>
+                  <a class="white-text" href="#!">
+                    Official College of Theology Website
+                  </a>
+                </li>
+
+              </ul>
+            </div>
+
+ 
+          </div>
+        </div>
+        <div class="footer-copyright">
+          <div class="container">
+          Made by <a class="red-text text-lighten-3" href="#!">The Three Legendary Sannin + 1 Team</a>
+          </div>
+        </div>
+      </footer>
+
+    </body>
+</html>

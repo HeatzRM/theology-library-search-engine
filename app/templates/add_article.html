@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container" style="background-color: white; border-radius: 25px; padding: 20px;  margin-top: 2%; margin-bottom: 2%;" >
+        <div class="row">
+            <div class="card-content">
+                
+                <span class="card-title black-text" style="text-align:center;">
+                    <h3>Add Article</h3>
+                </span>
+
+                 <form action="/add_article" method="post" enctype="multipart/form-data">
+                <table>
+
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.title.label() }}<br>
+                        {{ form.title(size=32, placeholder="Required") }}<br>
+                        </td>
+                        
+                        <td>
+                        {{ form.subtitle.label }}<br>
+                        {{ form.subtitle(size=32, placeholder="") }}<br>
+                        </td>
+
+                         <td>
+                        {{ form.author.label }}<br>
+                        {{ form.author(size=32, placeholder="") }}<br>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                        {{ form.journal_title.label }}<br>
+                        {{ form.journal_title(size=32, placeholder="") }}<br>
+                        </td>
+
+                        <td>
+                        {{ form.place_of_publisher.label }}<br>
+                        {{ form.place_of_publisher(size=32, placeholder="") }}<br>
+                        </td>
+
+                        <td>
+                        {{ form.name_of_publisher.label }}<br>
+                        {{ form.name_of_publisher(size=32, placeholder="") }}<br>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                        {{ form.issn.label }}<br>
+                        {{ form.issn(size=32, placeholder="") }}<br>
+                        </td>
+
+                        <td>
+                        {{ form.volume_number.label }}<br>
+                        {{ form.volume_number(size=32, placeholder="") }}<br>
+                        </td>
+
+                        <td>
+                        {{ form.issue_number.label }}<br>
+                        {{ form.issue_number(size=32, placeholder="") }}<br>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <table>
+                    <tr>
+                        <td>
+                        {{ form.year.label }}<br>
+                        {{ form.year(size=32, placeholder="") }}<br>
+                        </td>
+
+                        <td>
+                        {{ form.month.label }}<br>
+                        {{ form.month(size=32, placeholder="") }}<br>
+                        </td>
+
+                        <td>
+                        {{ form.subject.label }}<br>
+                        {{ form.subject(size=32, placeholder="") }}<br>
+                        </td>
+
+                        <td>
+                            {{ form.no_of_pages.label }}<br>
+                            {{ form.no_of_pages(size=32, placeholder="") }}<br>
+                        </td>
+                    </tr>
+                </table>
+                        
+
+
+                    {{ form.abstract.label }}<br>
+                    {{ form.abstract(style="overflow:auto", class_="materialize-textarea", placeholder="") }}<br>
+
+                    <p>Cover Image*</p>
+                        <div class="file-field input-field required">
+                          <div class="btn">
+                            <span>File</span>
+                            <input type="file" name="cover_img" accept="image/*" >
+                          </div>
+                          <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="Required">
+                          </div>
+                        </div>
+
+
+                    <p>Pages</p>
+                        <div class="file-field input-field">
+                          <div class="btn">
+                            <span>File</span>
+                            <input type="file" name="pages" accept="image/*" multiple>
+                          </div>
+                          <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                          </div>
+                        </div>
+
+                    <p>PDF</p>
+                        <div class="file-field input-field">
+                          <div class="btn">
+                            <span>File</span>
+                            <input type="file" name="pdf" accept="application/pdf">
+                          </div>
+                          <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                          </div>
+                        </div>
+                    
+               
+                    <p class="right">{{ form.submit(class_="btn-large") }}</p>
+                    </form>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

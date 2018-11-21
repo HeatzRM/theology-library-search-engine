@@ -1,0 +1,15 @@
+<form action="" method="post">
+    
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.query.label }}<br>
+        {{ form.query(size=32) }}<br>
+    </p>
+
+    <p>{{ form.submit(class_="btn-large light-blue darken-1 right") }}</p>
+
+    <p><a class='btn-large light-blue darken-2' placeholder="Search" href="{{ url_for('advanced_search_engine') }}" type="button">Advanced Search</a>
+    </p>
+
+</form>
+<br>

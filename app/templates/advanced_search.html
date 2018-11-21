@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block content %}
+      <div class="container" style="background-color: white; border-radius: 25px; padding: 20px; margin-top: 2%; margin-bottom: 2%;">
+          <div class="row">
+            <div class="card-content"> 
+                <span class="card-title black-text" style="text-align:center;" ><h3>Advanced Search for Journals</h3></span>
+
+                 <form action="" method="post">
+                <table>
+
+
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.article_title.label }}<br>
+                        {{ form.article_title(size=32) }}<br>
+                        </td>
+                    </tr>
+                        
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.subtitle.label }}<br>
+                        {{ form.subtitle(size=32) }}<br>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.author.label }}<br>
+                        {{ form.author(size=32) }}<br>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.journal_title.label }}<br>
+                        {{ form.journal_title(size=32) }}<br>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.place_of_publisher.label }}<br>
+                        {{ form.place_of_publisher(size=32) }}<br>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.name_of_publisher.label }}<br>
+                        {{ form.name_of_publisher(size=32) }}<br>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.issn.label }}<br>
+                        {{ form.issn(size=32) }}<br>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.volume_number.label }}<br>
+                        {{ form.volume_number(size=32) }}<br>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.issue_number.label }}<br>
+                        {{ form.issue_number(size=32) }}<br>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.year.label }}<br>
+                        {{ form.year(size=32) }}<br>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.month.label }}<br>
+                        {{ form.month(size=32) }}<br>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.no_of_pages.label }}<br>
+                        {{ form.no_of_pages(size=32) }}<br>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.subject.label }}<br>
+                        {{ form.subject(size=32) }}<br>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.abstract.label }}<br>
+                        {{ form.abstract(size=32) }}<br>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                        {{ form.hidden_tag() }}
+                        {{ form.contains_these_words.label }}<br>
+                        {{ form.contains_these_words(size=32) }}<br>
+                        </td>
+                    </tr>
+
+                  
+                </table>
+            
+                        <p class="">{{ form.submit(class_="btn-large") }}</p>
+
+                        <p class="left"><a class='btn-large' href="{{ url_for('simple_search_engine') }}" type="button">Simple Search</a>
+                        </p>
+
+
+                    </form>
+                    
+            </div>
+        </div>
+    </div>
+{% endblock %}
