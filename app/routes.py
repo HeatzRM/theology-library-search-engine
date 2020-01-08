@@ -165,7 +165,7 @@ def simple_search_engine():
         except TypeError as ex:
             print("An error occured!  " + str(ex))
         except LookupError as ex:
-            print('Lookup error download nltk.....: ') + str(ex)
+            print('Lookup error download nltk.....: '  + str(ex) )
             import nltk
             nltk.download("all")
         try:
