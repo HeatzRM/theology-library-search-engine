@@ -19,6 +19,7 @@ numpy==1.18.1
 pathspec==0.7.0
 pdfminer==20191125
 Pillow==7.0.0
+psycopg2==2.8.4
 pycryptodome==3.9.4
 pytesseract==0.3.1
 python-dateutil==2.8.1

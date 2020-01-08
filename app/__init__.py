@@ -17,7 +17,7 @@ login = LoginManager(app)
 login.login_view = "login"
 
 if not app.debug:
-    if app.config['LOG_TO_STDOUT']:
+    if app.config["LOG_TO_STDOUT"]:
         stream_handler = logging.StreamHandler()
         stream_handler.setLevel(logging.INFO)
         app.logger.addHandler(stream_handler)
