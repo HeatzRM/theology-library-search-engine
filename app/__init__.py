@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from config import Config
-import waitress
+# import waitress
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -40,4 +40,4 @@ if not app.debug:
 from app import routes, models
 
 port = int(os.environ.get("PORT", 80))
-waitress.serve(app, port=port)
+# waitress.serve(app, port=port)

@@ -44,6 +44,10 @@ def insert_converted_text_in_journal(text, input_journal):
         "TotalNoOfTerms": len(text.lower().split(" ")),
         "TFIDF": 0,
     }
+    
+    '''
+    #Saves to dictionary file
+    #TODO redo database system
     indexfile = dict("")
     try:
         indexfile = TextHandler().OpenTextFrom("static", "index.JSON")
@@ -53,5 +57,6 @@ def insert_converted_text_in_journal(text, input_journal):
     print(input_journal.id)
     indexfile[int(input_journal.id)] = new_book
     TextHandler().SaveFileTo("static", "index.JSON", json.dumps(indexfile))
+    '''
     db.session.add(input_journal)
     db.session.commit()
