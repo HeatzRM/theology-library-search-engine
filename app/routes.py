@@ -25,10 +25,6 @@ from app.forms import (
 )
 from app.models import User, Article, PDFFile
 
-from .foldergenerator import FolderGenerator
-from .fileuploader import FileUploader
-from .directorygetter import DirectoryGetter
-from .uploadhandler import UploadHandler
 from .resulthandler import (
     get_search_result,
     make_list_cluster_docs,
@@ -36,6 +32,8 @@ from .resulthandler import (
 )
 from .textmining import TextMiner
 from .texthandler import TextHandler
+
+import boto3
 
 # Create an instance of the engine and the session
 engine = create_engine(Config.SQLALCHEMY_DATABASE_URI, echo=True)
@@ -86,12 +84,10 @@ def login():
         return redirect(next_page)
     return render_template("login.html", title="Sign In", form=form)
 
-
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for("index"))
-
 
 @app.route("/register", methods=["GET", "POST"])
 # @login_required
@@ -280,87 +276,18 @@ def add_article():
     if form.validate_on_submit():
         if request.method == "POST":
 
-            upload_key = str(uuid4())
-            APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-
-            target = os.path.join(APP_ROOT, "static/")
-            target = target + "images/" + upload_key
-            print("Starting a new Article upload, Upload Directory is: " + target)
-
-            FolderGenerator().create_upload_directory(target)
-
-            page_directory = FolderGenerator().create_page_directory(target)
-            cover_image_directory = FolderGenerator().create_cover_directory(target)
-            pdf_directory = FolderGenerator().create_pdf_directory(target)
-
-            FileUploader().cover_uploader(request, target, cover_image_directory)
-            FileUploader().pages_uploader(request, target, page_directory)
-            FileUploader().pdf_uploader(request, target, pdf_directory)
-
-            list_of_page_image_names = os.listdir(page_directory)
-            list_of_page_image_directory = DirectoryGetter().get_page_image_directory(
-                list_of_page_image_names, page_directory, target
+            session = boto3.Session(
+                aws_access_key_id=app.config["AWS_ACCESS_KEY_ID"], 
+                aws_secret_access_key=app.config["AWS_SECRET_ACCESS_KEY"], 
             )
 
-            list_of_cover_names = os.listdir(cover_image_directory)
-            list_of_cover_image_directory = DirectoryGetter().get_cover_image_directory(
-                list_of_cover_names, cover_image_directory, target
-            )
-
-            list_of_pdf_names = os.listdir(pdf_directory)
-            list_of_pdf_directory = DirectoryGetter().get_pdf_directory(
-                list_of_pdf_names, pdf_directory, target
-            )
-
-            # Create and Insert Journal
-            input_article = Article(
-                title=form.title.data,
-                subtitle=form.subtitle.data,
-                abstract=form.abstract.data,
-                author=form.author.data,
-                journal_title=form.journal_title.data,
-                place_of_publisher=form.place_of_publisher.data,
-                name_of_publisher=form.name_of_publisher.data,
-                issn=form.issn.data,
-                volume_number=form.volume_number.data,
-                issue_number=form.issue_number.data,
-                year=form.year.data,
-                month=form.month.data,
-                no_of_pages=form.no_of_pages.data,
-                subject=form.subject.data,
-                img_url=upload_key,
-            )
-
-            uploadhandler = UploadHandler()
-            uploadhandler.input_article = input_article
-            uploadhandler.list_of_image_directory = list_of_page_image_directory
-            uploadhandler.list_of_page_image_names = list_of_page_image_names
-
             try:
-                uploadhandler.cover_image_destination = list_of_cover_image_directory[0]
-            except Exception as ex:
-                print("Error Occurred in Cover Image Upload Destination" + str(ex))
+                for file in request.files.getlist("pdf"):
+                    s3_client = session.resource('s3')
+                    s3_client.Bucket(app.config["S3_BUCKET"]).put_object(Key=file.filename, Body=file)
 
-            try:
-                uploadhandler.cover_image_name = list_of_cover_names[0]
             except Exception as ex:
-                print("Error Occurred in Cover Image Upload Name" + str(ex))
-
-            try:
-                uploadhandler.pdf_destination = list_of_pdf_directory[0]
-            except Exception as ex:
-                print(
-                    "Error Occured in PDF Upload Destination, field might be empty: "
-                    + str(ex)
-                )
-
-            try:
-                uploadhandler.pdf_name = list_of_pdf_names[0]
-            except Exception as ex:
-                print("Error Occured in Upload PDF Name" + str(ex))
-
-            conversion_thread = Thread(target=uploadhandler.run_converters)
-            conversion_thread.start()
+                print(ex)
 
             flash("ARTICLE IS NOW BEING CONVERTED")
             flash("YOU MAY ADD ANOTHER ARTICLE OR LEAVE THIS PAGE")
