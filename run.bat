@@ -1,1 +1,0 @@
-venv\Scripts\activate & set FLASK_APP=application.py & set FLASK_ENV=development & set FLASK_DEBUG=true & python3 -m flask run &

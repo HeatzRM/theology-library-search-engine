@@ -166,8 +166,8 @@ def simple_search_engine():
             print("An error occured!  " + str(ex))
         except LookupError as ex:
             print('Lookup error download nltk.....: '  + str(ex) )
-            # import nltk
-            # nltk.download("all")
+            import nltk
+            nltk.download("all")
         try:
             documents_list = make_list_cluster_docs()
         except NameError as ex:

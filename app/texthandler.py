@@ -6,7 +6,7 @@ from .textsanitizer import TextSanitizer
 class TextHandler(object):
     def WordCounter(self, text):
         return Counter(text.split())
-'''
+
     def SaveFileTo(self, destination, filename, x):
         with open(destination + "//" + filename, "w") as outfile:
             json.dump(x, outfile)
@@ -16,4 +16,3 @@ class TextHandler(object):
         with open(file_location + "//" + filename) as json_file:
             json_data = json.load(json_file)
             return json_data
-'''
