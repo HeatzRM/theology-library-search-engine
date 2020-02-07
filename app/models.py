@@ -94,7 +94,7 @@ class Article(db.Model):
 class Page(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text())
-    converted_text = db.Column(db.JSON())
+    converted_text = db.Column(db.Text())
     page_url = db.Column(db.String(255))
     page_name = db.Column(db.String(255))
     article_id = db.Column(db.Integer, db.ForeignKey("article.id"))
@@ -103,7 +103,7 @@ class Page(db.Model):
 class PDFFile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text())
-    converted_text = db.Column(db.JSON())
+    converted_text = db.Column(db.Text())
     pdf_url = db.Column(db.String(255))
     pdf_name = db.Column(db.String(255))
     article_id = db.Column(db.Integer, db.ForeignKey("article.id"))
