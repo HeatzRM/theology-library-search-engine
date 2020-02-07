@@ -175,6 +175,7 @@ def simple_search_engine():
         print("out_cluster_terms:" + " " + str(out_cluster_terms))
         print("query:" + " " + str(query))
         print("out_articles " + str(out_articles))
+
         out_articles = [i for i in out_articles if i is not None]
         return search_results(out_articles, out_cluster_terms, query)
     return render_template("search.html", title="Search", form=form)
@@ -184,43 +185,11 @@ def simple_search_engine():
 @app.route("/delete/<int:article_num>", methods=["GET"])
 def delete(article_num):
     if request.method == "GET":
-        # Delete Images on static
         article = Article.query.filter_by(id=article_num).first_or_404()
-        try:
-            shutil.rmtree(
-                os.path.dirname(os.path.abspath(__file__))
-                + "//static//images"
-                + "//"
-                + article.img_url
-            )
-        except Exception as e:
-            print(e)
-        # Delete Files on index.JSON
-        indexfile = ""
-        try:
-            indexfile = TextHandler().OpenTextFrom(
-                os.path.dirname(os.path.abspath(__file__)) + "//" + "static",
-                "index.JSON",
-            )
-            indexfile = json.loads(indexfile)
-        except Exception as ex:
-            print(ex)
-        try:
-            indexfile.pop(str(article_num))
-        except Exception as ex:
-            print(ex)
-        try:
-            TextHandler().SaveFileTo(
-                os.path.dirname(os.path.abspath(__file__)) + "//static",
-                "index.JSON",
-                json.dumps(indexfile),
-            )
-            # Delete The Article by ID in the Database
-            db.session.delete(article)
-            db.session.commit()
-            flash("Article was successfully deleted")
-        except Exception as ex:
-            print(ex)
+        db.session.delete(article)
+        db.session.commit()
+        flash("Article was successfully deleted")
+
         return redirect(url_for("index"))
 
 
@@ -276,31 +245,21 @@ def add_article():
     if form.validate_on_submit():
         if request.method == "POST":
 
+            #Upload Cover Image to Amazon S3
             session = boto3.Session(
                 aws_access_key_id=app.config["AWS_ACCESS_KEY_ID"], 
                 aws_secret_access_key=app.config["AWS_SECRET_ACCESS_KEY"], 
             )
 
-            # try:
-            #     for file in request.files.getlist("pdf"):
-            #         s3_client = session.resource('s3')
-            #         s3_client.Bucket(app.config["S3_BUCKET"]).put_object(Key=str(uuid4())+"_"+file.filename, Body=file, ACL='private')
-            # except Exception as ex:
-            #     print(ex)
-            
-            # try:
-            #     for file in request.files.getlist("pages"):
-            #         s3_client = session.resource('s3')
-            #         s3_client.Bucket(app.config["S3_BUCKET"]).put_object(Key=str(uuid4())+"_"+file.filename, Body=file, ACL='private')
-            # except Exception as ex:
-            #     print(ex)
-            
             try:
                 for file in request.files.getlist("cover_img"):
                     s3_client = session.resource('s3')
-                    s3_client.Bucket(app.config["S3_BUCKET"]).put_object(Key=str(uuid4())+"_"+file.filename, Body=file, ACL='public-read')
+                    test = s3_client.Bucket(app.config["S3_BUCKET"]).put_object(Key=str(uuid4()) +"_"+ file.filename, Body=file, ACL='public-read')
             except Exception as ex:
                 print(ex)
+
+            #Insert to database
+            
 
 
             flash("ARTICLE IS NOW BEING CONVERTED")
