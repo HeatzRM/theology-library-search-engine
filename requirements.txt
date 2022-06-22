@@ -15,7 +15,7 @@ joblib==0.14.1
 Mako==1.1.0
 MarkupSafe==1.1.1
 nltk==3.4.5
-numpy==1.18.1
+numpy==1.22.0
 pathspec==0.7.0
 pdfminer==20191010
 Pillow==7.0.0
